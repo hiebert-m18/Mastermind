@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=FormatTemplateV3
+comment0.text=\n\ \ Name\:\ \ \ \ \ \ \ \ \ \ \ Hiebert\n\ \ Class\:\ \ \ \ \ \ \ \ \ \ CS40S\n\ \n\ \ Assignment\:\ \ \ \ \ Ax\ Qy\n\ \n\ \ Description\:\ \ \ \ Place\ a\ short\ description\ of\ your\ program\ here\n\ \n
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+numComments=2
