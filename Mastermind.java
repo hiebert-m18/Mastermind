@@ -3,76 +3,58 @@ import javax.swing.*;
 import java.io.*;
 import java.text.NumberFormat;
 
-/** ***************************************************
- *  Name:           Hiebert
+/*****************************************************
+ *  Name:           Malacai Hiebert
  *  Class:          CS40S
  * 
  *  Assignment:     Assignment 1: Mastermind
  * 
- *  Description:    The game Mastermind
- * 
- *************************************************************/
+ *  Description:    A text-based version of Mastermind
+ *****************************************************/
 
 public class Mastermind {
-
     public static void main(String[] args) throws IOException{
-    // ***** constants *******
+        // ***** Constants *******
     
-    // ***** variables *****
+        // ***** Variables *****
     
-        String banner = "";             // output banner
-        String prompt = "";             // prompt for user input
-        
-        String strin = "";              // string fro keyboard input
-        String strout = "";             // string for formatted output
-        
-        String delim = "[ ]+";          // delimiter for splitting input records
-        String[] tokens = null;         // used to split input records
-        
-        // a new line character that works on every computer system
         String nl = System.lineSeparator();
     
-    // ***** objects *****
+        // ***** Objects *****
     
         //Scanner scanner = new Scanner(System.in);
         //NumberFormat currency = NumberFormat.getCurrencyInstance();
         
-        // file io buffers for reading and writing to text files
-        
         //BufferedReader fin = new BufferedReader(new FileReader("filename.txt"));
         //PrintWriter fout = new PrintWriter(new BufferedWriter(new FileWriter("outfle.txt")));
     
-    // ***** print banners *****
+        // ***** Print Banner *****
     
-        banner =  "*************************************" + nl;
-        banner += "Name:        Hiebert" + nl;
-        banner += "Class:       CS40S" + nl;
-        banner += "Assignment:  Assignment 1: Mastermind" + nl;
-        banner += "*************************************" + nl + nl;
+        printBanner();
+    
+        // ***** Get Input *****
+    
+        // ***** Main Processing *****
+    
+        // ***** Print Formatted Output *****
         
-        System.out.println(banner);
-        //fout.print(banner);
-    
-    // ***** Get Input *****
-    
-        // prompt for input
-        // read input from keyboard
-        // echo input back to console window
-    
-    // ***** Main Processing *****
-    
-    // ***** Print Formatted Output *****
-    
-    // ***** Closing Message *****
-    
-        System.out.println();
-        System.out.println("end of processing");
-        //fout.println("End of Processing");
-        
-    // **** close io buffers *****
+        // ***** Close IO Buffers *****
     
         //fin.close();
         //fout.close();
-    } // end main 
+        
+    } // end main
     
+    /***********************************************************
+    *   Purpose:    print a banner to the console window
+    *   Interface:  no parameters
+    *   Returns:    no return
+    ************************************************************/    
+    public static void printBanner(){
+        System.out.println("*******************************************");
+        System.out.println("Name:           Malacai Hiebert");
+        System.out.println("Class:          CS40S");
+        System.out.println("Assignment:     Assignment 1: Mastermind");
+        System.out.println("*******************************************");        
+    } // end print banner
 } // end Mastermind
