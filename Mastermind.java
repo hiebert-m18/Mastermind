@@ -150,6 +150,9 @@ public class Mastermind {
         }// end for
         System.out.println("The solution was " + fAnswer);
         
+        // ADD THE OPTION FOR THE PLAYER TO QUIT OR PLAY AGAIN
+        // ADD HIGH SCORE, AVERAGE SCORE, BEST SCORE, AND NUMBER OF WINS. (USING THE LOG.TXT FILE)
+        
         // ***** Close IO Buffers *****
     
         //fin.close();
