@@ -37,6 +37,7 @@ public class Mastermind {
         // Solution and Guess Arrays
         char[] solution;
         char[] guess;
+        String g = "";
         
         // Possible Guess Values
         int numValues = 8;
@@ -95,7 +96,7 @@ public class Mastermind {
         
         while (gameOver == false) {
             System.out.print("Guess a sequence (" + valString + "): ");
-            String g = scanner.nextLine();
+            g = scanner.next().toUpperCase();
             for (int i = 0; i < guess.length; i++) {
                 guess[i] = g.charAt(i);
             }// end for
@@ -138,7 +139,7 @@ public class Mastermind {
         System.out.println("***** Game Over *****");
         
         if (hasWon == true) {
-            System.out.println("You won!!! Score: " + roundNum);
+            System.out.println("You won!!! Score: " + roundNum + "guesses.");
         } else {
             System.out.println("Better luck next time!");
         }// end else if
@@ -156,7 +157,7 @@ public class Mastermind {
         
     } // end main
     
-    static boolean checkArray(char[] arr, char toCheckValue) {
+    public static boolean checkArray(char[] arr, char toCheckValue) {
         boolean test = false;
         for (char element : arr) {
             if (element == toCheckValue) {
