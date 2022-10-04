@@ -24,6 +24,7 @@ public class Mastermind {
         // Booleans
         boolean gameOver = false;
         boolean hasWon = false;
+        boolean quit = false;
         
         // Game Board
         int roundNum = 0;
@@ -46,12 +47,13 @@ public class Mastermind {
         
         // Temporary Holder for scores
         int[] tempScores = new int[4];
+        
+        // Endgame variables
+        int n = 0;
     
         // ***** Objects *****
     
         Scanner scanner = new Scanner(System.in);
-        //NumberFormat currency = NumberFormat.getCurrencyInstance();
-        
         Random rand = new Random();
     
         // ***** Print Banner *****
@@ -78,93 +80,109 @@ public class Mastermind {
     
         // ***** Main Processing *****
         
-        System.out.println(nl + "***** Play *****" + nl);
+        // full game loop
         
-        tempScores = getScores();
-        System.out.println("Games Played: " + tempScores[0]);
-        System.out.println("Games Won: " + tempScores[1]);
-        System.out.println("Highest Score: " + tempScores[2]);
-        System.out.println("Average Score: " + tempScores[3] + nl);
-        
-        // Fill Out Board
-        fillBoard(board, '_');
-        fillBoard(solBoard, "");
-        
-        // String of all possible colour values
-        for (int i = 0; i < numValues; i++) {
-            valString += allValues[i];
-        }// end for
-        
-        // Generate Solution
-        for (int i = 0; i < solution.length; i++) {
-            solution[i] = allValues[rand.nextInt(numValues)];
-        }// end for
-        
-        while (gameOver == false) {
-            System.out.print("Guess a sequence (" + valString + "): ");
-            g = scanner.next().toUpperCase();
-            for (int i = 0; i < guess.length; i++) {
-                guess[i] = g.charAt(i);
+        while (quit == false) {
+            // reset variables
+            gameOver = false;
+            hasWon = false;
+            roundNum = 0;
+            g = "";
+            valString = "";
+            solution = new char[col];
+            guess = new char[col];
+            
+            
+            System.out.println(nl + "***** Play *****" + nl);
+            
+            tempScores = getScores();
+            System.out.println("Games Played: " + tempScores[0]);
+            System.out.println("Games Won: " + tempScores[1]);
+            System.out.println("Highest Score: " + tempScores[2]);
+            System.out.println("Average Score: " + tempScores[3] + nl);
+            
+            // Fill Out Board
+            fillBoard(board, '_');
+            fillBoard(solBoard, "");
+            
+            // String of all possible colour values
+            for (int i = 0; i < numValues; i++) {
+                valString += allValues[i];
             }// end for
             
-            for (int i = 0; i < guess.length; i++) {
-                if (guess[i] == solution[i]) {
-                    board[roundNum][i] = guess[i];
-                } else if (checkArray(solution, guess[i]) == true) {
-                    board[roundNum][i] = guess[i];
-                } else {
-                    board[roundNum][i] = guess[i];
-                }// end if else
-            }// end for
-            
-            // check rows
-            checkRows(solution, guess, solBoard, roundNum);
-            
-            //check for endgame
-            int n = 0;
+            // Generate Solution
             for (int i = 0; i < solution.length; i++) {
-                if (solution[i] == guess[i]) {
-                    n += 1;
-                }
+                solution[i] = allValues[rand.nextInt(numValues)];
             }// end for
-            if (n == solution.length) {
-                gameOver = true;
-                hasWon = true;
-            }
-            if (roundNum == (row-1)) {
-                gameOver = true;
+            
+            while (gameOver == false) {
+                System.out.print("Guess a sequence (" + valString + "): ");
+                g = scanner.next().toUpperCase();
+                for (int i = 0; i < guess.length; i++) {
+                    guess[i] = g.charAt(i);
+                }// end for
+                
+                for (int i = 0; i < guess.length; i++) {
+                    if (guess[i] == solution[i]) {
+                        board[roundNum][i] = guess[i];
+                    } else if (checkArray(solution, guess[i]) == true) {
+                        board[roundNum][i] = guess[i];
+                    } else {
+                        board[roundNum][i] = guess[i];
+                    }// end if else
+                }// end for
+                
+                // check rows
+                checkRows(solution, guess, solBoard, roundNum);
+                
+                //check for endgame
+                n = 0;
+                for (int i = 0; i < solution.length; i++) {
+                    if (solution[i] == guess[i]) {
+                        n += 1;
+                    }
+                }// end for
+                if (n == solution.length) {
+                    gameOver = true;
+                    hasWon = true;
+                }
+                if (roundNum == (row-1)) {
+                    gameOver = true;
+                }// end else if
+                
+                roundNum += 1;
+                printBoard(board, solBoard);
+                System.out.println();
+            }// end game loop
+        
+            // ***** Print Formatted Output *****
+            
+            System.out.println("***** Game Over *****");
+            
+            if (hasWon == true) {
+                System.out.println("You won!!! Score: " + roundNum + "guesses.");
+            } else {
+                System.out.println("Better luck next time!");
             }// end else if
             
-            roundNum += 1;
-            printBoard(board, solBoard);
-            System.out.println();
-        }// end game loop
-    
-        // ***** Print Formatted Output *****
-        
-        System.out.println("***** Game Over *****");
-        
-        if (hasWon == true) {
-            System.out.println("You won!!! Score: " + roundNum + "guesses.");
-        } else {
-            System.out.println("Better luck next time!");
-        }// end else if
-        
-        String fAnswer = "";
-        for (int i = 0; i < solution.length; i++) {
-            fAnswer += solution[i];
-        }// end for
-        System.out.println("The solution was " + fAnswer);
-        
-        // Update score system
-        updateScores(roundNum, hasWon);
+            String fAnswer = "";
+            for (int i = 0; i < solution.length; i++) {
+                fAnswer += solution[i];
+            }// end for
+            System.out.println("The solution was " + fAnswer + nl);
+            
+            // Update score system
+            updateScores(roundNum, hasWon);
+            
+            // check for play again
+            System.out.print("Do you want to play again (y/n): ");
+            String playAgain = scanner.next().toLowerCase().strip();
+            if (playAgain.charAt(0) == 'n') {
+                quit = true;
+            }// end if
+        }// end full game loop
         
         // ADD THE OPTION FOR THE PLAYER TO QUIT OR PLAY AGAIN
-        
-        // ***** Close IO Buffers *****
-    
-        //fin.close();
-        //fout.close();
         
     } // end main
     
@@ -288,24 +306,4 @@ public class Mastermind {
         System.out.println("Assignment:     Assignment 1: Mastermind");
         System.out.println("*******************************************");        
     } // end printBanner
-    
-    public static void clearConsole() {
-        try
-        {
-            final String os = System.getProperty("os.name");
-            
-            if (os.contains("Windows"))
-            {
-                Runtime.getRuntime().exec("cls");
-            }
-            else
-            {
-                Runtime.getRuntime().exec("clear");
-            }
-        }
-        catch (final Exception e)
-        {
-            //  Handle any exceptions.
-        }
-    }
 } // end Mastermind
