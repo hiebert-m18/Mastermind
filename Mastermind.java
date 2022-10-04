@@ -43,14 +43,14 @@ public class Mastermind {
         int numValues = 8;
         String valString = "";
         char[] allValues = {'R', 'O', 'Y', 'G', 'B', 'I', 'V', 'W'};
+        
+        // Temporary Holder for scores
+        int[] tempScores = new int[4];
     
         // ***** Objects *****
     
         Scanner scanner = new Scanner(System.in);
         //NumberFormat currency = NumberFormat.getCurrencyInstance();
-        
-        //BufferedReader fin = new BufferedReader(new FileReader("filename.txt"));
-        //PrintWriter fout = new PrintWriter(new BufferedWriter(new FileWriter("outfle.txt")));
         
         Random rand = new Random();
     
@@ -78,7 +78,13 @@ public class Mastermind {
     
         // ***** Main Processing *****
         
-        System.out.println(nl + "***** Play *****");
+        System.out.println(nl + "***** Play *****" + nl);
+        
+        tempScores = getScores();
+        System.out.println("Games Played: " + tempScores[0]);
+        System.out.println("Games Won: " + tempScores[1]);
+        System.out.println("Highest Score: " + tempScores[2]);
+        System.out.println("Average Score: " + tempScores[3] + nl);
         
         // Fill Out Board
         fillBoard(board, '_');
@@ -150,8 +156,10 @@ public class Mastermind {
         }// end for
         System.out.println("The solution was " + fAnswer);
         
+        // Update score system
+        updateScores(roundNum, hasWon);
+        
         // ADD THE OPTION FOR THE PLAYER TO QUIT OR PLAY AGAIN
-        // ADD HIGH SCORE, AVERAGE SCORE, BEST SCORE, AND NUMBER OF WINS. (USING THE LOG.TXT FILE)
         
         // ***** Close IO Buffers *****
     
@@ -159,6 +167,61 @@ public class Mastermind {
         //fout.close();
         
     } // end main
+    
+    public static void updateScores(int score, boolean hasWon) throws IOException {
+        int[] scores = getScores();
+        
+        // Update Games Played
+        scores[0] += 1;
+        
+        // Update number of wins
+        if (hasWon == true) {
+            scores[1] += 1;
+        }// end if
+        
+        // Check for higher scores
+        if (scores[2] < score) {
+            scores[2] = score;
+        }// end if
+        
+        // update average score
+        if (scores[3] == 0) {
+            scores[3] = score;
+        } else {
+            scores[3] = ((scores[3] * (scores[0] - 1)) + score) / scores[0];
+        }// end else if
+        
+        PrintWriter fout = new PrintWriter(new BufferedWriter(new FileWriter("log.txt")));
+        
+        // Print to file
+        for (int i : scores) {
+            fout.println(i);
+        }// end for
+        
+        fout.close();
+    }// end updateScores
+    
+    public static int[] getScores() throws IOException {
+        // set up reader
+        BufferedReader fin = null;
+        try {
+            fin = new BufferedReader(new FileReader("log.txt"));
+        } catch(Exception e) {
+            System.out.println("File does not exist");
+        }// end try catch
+        
+        String strin;
+        int[] scores = new int[4];
+        int i = 0;
+        while ((strin = fin.readLine()) != null) {
+            scores[i] = Integer.parseInt(strin);
+            i++;
+        }// end while
+        
+        fin.close();
+        
+        return scores;
+    }// end getScores
     
     public static boolean checkArray(char[] arr, char toCheckValue) {
         boolean test = false;
