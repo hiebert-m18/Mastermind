@@ -160,7 +160,7 @@ public class Mastermind {
             System.out.println("***** Game Over *****");
             
             if (hasWon == true) {
-                System.out.println("You won!!! Score: " + roundNum + "guesses.");
+                System.out.println("You won!!! Score: " + roundNum + " guesses.");
             } else {
                 System.out.println("Better luck next time!");
             }// end else if
