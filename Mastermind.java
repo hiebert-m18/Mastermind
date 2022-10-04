@@ -198,7 +198,7 @@ public class Mastermind {
         }// end if
         
         // Check for higher scores
-        if (scores[2] < score) {
+        if (scores[2] > score) {
             scores[2] = score;
         }// end if
         
