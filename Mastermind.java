@@ -62,6 +62,12 @@ public class Mastermind {
     
         // ***** Get Input (Set up the game) *****
         
+        System.out.println(nl + "***** Game Notes *****");
+        System.out.println("1. 'O' means that the letter is in the right place.");
+        System.out.println("2. '?' means that the letter is not in the right place.");
+        System.out.println("3. 'Ø' means that the letter is not in the solution.");
+        System.out.println("4. These symbols are not in order.");
+        
         System.out.println(nl + "***** Game Setup *****");
         System.out.print("Length of solution (4-8): ");
         try {
@@ -240,7 +246,7 @@ public class Mastermind {
         }// end if
         
         // Check for higher scores
-        if (scores[2] > score) {
+        if (scores[2] > score || scores[2] == 0) {
             scores[2] = score;
         }// end if
         
@@ -279,7 +285,11 @@ public class Mastermind {
         int[] scores = new int[4];
         int i = 0;
         while ((strin = fin.readLine()) != null) {
-            scores[i] = Integer.parseInt(strin);
+            try {
+                scores[i] = Integer.parseInt(strin);
+            } catch(Exception e) {
+                scores[i] = 0;
+            }// end try catch
             i++;
         }// end while
         
