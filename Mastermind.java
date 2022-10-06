@@ -200,7 +200,7 @@ public class Mastermind {
             if (hasWon == true) {
                 System.out.println("You won!!! Score: " + roundNum + " guesses.");
             } else {
-                System.out.println("Better luck next time!");
+                System.out.println("Better luck next time! Score: " + roundNum + " guesses.");
             }// end else if
             
             String fAnswer = "";
