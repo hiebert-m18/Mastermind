@@ -64,13 +64,45 @@ public class Mastermind {
         
         System.out.println(nl + "***** Game Setup *****");
         System.out.print("Length of solution (4-8): ");
-        col = scanner.nextInt();
+        try {
+            col = Integer.parseInt(scanner.next());
+            
+            if (col < 4) {
+                col = 4;
+            } else if (col > 8) {
+                col = 8;
+            }// end else if
+        } catch(Exception e) {
+            col = 4;
+        }// end try catch
+        
         
         System.out.print("Number of guesses (10-20): ");
-        row = scanner.nextInt();
+        try {
+            row = Integer.parseInt(scanner.next());
+            
+            if (row < 10) {
+                row = 10;
+            } else if (row > 20) {
+                row = 20;
+            }// end else if
+        } catch(Exception e) {
+            row = 10;
+        }// end try catch
+        
         
         System.out.print("Number of possible colour values (4-8): ");
-        numValues = scanner.nextInt();
+        try {
+            numValues = Integer.parseInt(scanner.next());
+            
+            if (numValues < 4) {
+                numValues = 4;
+            } else if (numValues > 8) {
+                numValues = 8;
+            }// end else if
+        } catch(Exception e) {
+            numValues = 4;
+        }// end try catch
         
         // reset arrays to new values
         board = new char[row][col];
@@ -118,6 +150,12 @@ public class Mastermind {
             while (gameOver == false) {
                 System.out.print("Guess a sequence (" + valString + "): ");
                 g = scanner.next().toUpperCase();
+                // error catching
+                if (g.length() < 4 || g.length() > 4 || checkArray(allValues, g) == false) {
+                    System.out.println("Try again!" + nl);
+                    continue;
+                }// end if
+                
                 for (int i = 0; i < guess.length; i++) {
                     guess[i] = g.charAt(i);
                 }// end for
@@ -182,10 +220,14 @@ public class Mastermind {
             }// end if
         }// end full game loop
         
-        // ADD THE OPTION FOR THE PLAYER TO QUIT OR PLAY AGAIN
-        
+        scanner.close();
     } // end main
     
+    /***********************************************************
+    *   Purpose:    update the scores in the log.txt file
+    *   Interface:  score, hasWon
+    *   Returns:    no return
+    ************************************************************/ 
     public static void updateScores(int score, boolean hasWon) throws IOException {
         int[] scores = getScores();
         
@@ -219,6 +261,11 @@ public class Mastermind {
         fout.close();
     }// end updateScores
     
+    /***********************************************************
+    *   Purpose:    get score values from the log.txt file
+    *   Interface:  no parameters
+    *   Returns:    scores in an array
+    ************************************************************/ 
     public static int[] getScores() throws IOException {
         // set up reader
         BufferedReader fin = null;
@@ -241,6 +288,34 @@ public class Mastermind {
         return scores;
     }// end getScores
     
+    /***********************************************************
+    *   Purpose:    check array for items in a string
+    *   Interface:  array, string value
+    *   Returns:    boolean
+    ************************************************************/ 
+    public static boolean checkArray(char[] arr, String value) {
+        boolean test = false;
+        int n = 0;
+        for (int i = 0; i < value.length(); i++) {
+            for (int j = 0; j < arr.length; j++) {
+                if (value.charAt(i) == arr[j]) {
+                    n++;
+                }// end if
+            }// end for
+        }// end for
+        
+        if (n == 4) {
+            test = true;
+        }// end if
+        
+        return test;
+    }// end checkArray
+    
+    /***********************************************************
+    *   Purpose:    check array for a character
+    *   Interface:  array, char value
+    *   Returns:    boolean
+    ************************************************************/ 
     public static boolean checkArray(char[] arr, char toCheckValue) {
         boolean test = false;
         for (char element : arr) {
@@ -253,6 +328,11 @@ public class Mastermind {
         return test;
     }// end checkArray
     
+    /***********************************************************
+    *   Purpose:    solution checking function
+    *   Interface:  solution array, guess array, solution checking array, roundNum
+    *   Returns:    no return
+    ************************************************************/ 
     public static void checkRows(char[] a, char[] g, String[] s, int r) {
         s[r] = "";
         String rightSpot = "";
@@ -271,6 +351,11 @@ public class Mastermind {
         s[r] = rightSpot + rightColor + dne;
     }// end checkRows
     
+    /***********************************************************
+    *   Purpose:    fill out the 2d board array with chars
+    *   Interface:  2d board array, char value
+    *   Returns:    no return
+    ************************************************************/ 
     public static void fillBoard(char[][] b, char v) {
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {
@@ -279,12 +364,22 @@ public class Mastermind {
         }// end for i
     }// end fillBoard with char
     
+    /***********************************************************
+    *   Purpose:    fill out the solution checking board array with strings
+    *   Interface:  solution checking board array, string value
+    *   Returns:    no return
+    ************************************************************/ 
     public static void fillBoard(String[] s, String c) {
         for (int i = 0; i < s.length; i++) {
             s[i] = c;
         }// end for i
     }// end fillBoard with string
     
+    /***********************************************************
+    *   Purpose:    print the game board to the console window
+    *   Interface:  2d board array, solution checking board array
+    *   Returns:    no return
+    ************************************************************/ 
     public static void printBoard(char[][] b, String[] s) {
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {
