@@ -1,18 +1,10 @@
-#Tue Sep 27 10:47:38 CDT 2022
-bluej.teamsettings.ignore1=.*\\.class
+#Fri Oct 21 12:26:39 CDT 2022
+bluej.teamsettings.user=hiebert-m18
+bluej.teamsettings.savedpwd=19WEX0v+f1FRdiit+EFhQZwZ9HnZheP023Mj7MW0jlz2MSk9p7W9U2nTSvETHLqW
 bluej.teamsettings.yourName=Malacai Hiebert
 bluej.teamsettings.git.server=github.com
 bluej.teamsettings.yourEmail=hiebert-m18@webmail.uwinnipeg.ca
 bluej.teamsettings.git.repositoryPrefix=/hiebert-m18/Mastermind.git
-bluej.teamsettings.vcs=git
-bluej.teamsettings.user=hiebert-m18
-bluej.teamsettings.savedpwd=/gW8XEee2DaFDzmyBNCVCMMXqdOj6TGK3JNA64WAQ+XJZL8MLSDCnmmyRKDHLHkB
-bluej.teamsettings.ignore3=team\\.defs
-bluej.teamsettings.ignore2=bluej\\.pkh
-bluej.teamsettings.ignore5=.*\\~
 bluej.teamsettings.git.branch=
-bluej.teamsettings.ignore4=.*\\.ctxt
-bluej.teamsettings.ignore7=.*\\\#backup
-bluej.teamsettings.ignore6=.*\\\#
+bluej.teamsettings.vcs=git
 bluej.teamsettings.git.protocol=https
-bluej.teamsettings.ignore8=\\.DS_Store
