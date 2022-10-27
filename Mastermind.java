@@ -278,7 +278,9 @@ public class Mastermind {
         try {
             fin = new BufferedReader(new FileReader("log.txt"));
         } catch (Exception e) {
-            System.out.println("File does not exist");
+            PrintWriter fout = new PrintWriter(new BufferedWriter(new FileWriter("log.txt")));
+            fout.close();
+            fin = new BufferedReader(new FileReader("log.txt"));
         } // end try catch
 
         String strin;
