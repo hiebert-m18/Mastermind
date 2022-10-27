@@ -1,6 +1,11 @@
-import java.util.Scanner;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
+import java.util.Scanner;
 
 /*****************************************************
  * Name: Malacai Hiebert
@@ -164,7 +169,7 @@ public class Mastermind {
                 for (int i = 0; i < guess.length; i++) {
                     if (guess[i] == solution[i]) {
                         board[roundNum][i] = guess[i];
-                    } else if (checkArray(solution, guess[i]) == true) {
+                    } else if (checkArray(solution, guess[i], 1) == true) {
                         board[roundNum][i] = guess[i];
                     } else {
                         board[roundNum][i] = guess[i];
@@ -321,10 +326,11 @@ public class Mastermind {
      * Interface: array, char value
      * Returns: boolean
      ************************************************************/
-    public static boolean checkArray(char[] arr, char toCheckValue) {
+    public static boolean checkArray(char[] arr, char toCheckValue, int index) {
         boolean test = false;
-        for (char element : arr) {
-            if (element == toCheckValue) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == toCheckValue) {
+                index = i;
                 test = true;
                 break;
             } // end if
@@ -343,15 +349,39 @@ public class Mastermind {
         String rightSpot = "";
         String rightColor = "";
         String dne = "";
+
+        // make temporary guess and answer arrays
+        char[] aTemp = new char[4];
         for (int i = 0; i < a.length; i++) {
-            if (a[i] == g[i]) {
-                rightSpot += "O";
-            } else if (checkArray(a, g[i])) {
-                rightColor += "?";
-            } else {
-                dne += "Ø";
-            } // end else if
+            aTemp[i] = a[i];
         } // end for
+        char[] gTemp = new char[4];
+        for (int i = 0; i < g.length; i++) {
+            gTemp[i] = g[i];
+        } // end for
+
+        // Check for exact
+        for (int i = 0; i < aTemp.length; i++) {
+            if (aTemp[i] == gTemp[i]) {
+                rightSpot += "O";
+                aTemp[i] = '0';
+                gTemp[i] = '1';
+            }
+        }
+
+        int index = 0;
+        // Check for correct
+        for (int i = 0; i < aTemp.length; i++) {
+            if (checkArray(aTemp, gTemp[i], index)) {
+                rightColor += "?";
+                gTemp[i] = '0';
+            }
+        }
+
+        // Make the rest incorrect
+        for (int i = 0; i < 4 - (rightSpot.length() + rightColor.length()); i++) {
+            dne += "Ø";
+        }
 
         s[r] = rightSpot + rightColor + dne;
     }// end checkRows
