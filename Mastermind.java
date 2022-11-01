@@ -169,7 +169,7 @@ public class Mastermind {
                 for (int i = 0; i < guess.length; i++) {
                     if (guess[i] == solution[i]) {
                         board[roundNum][i] = guess[i];
-                    } else if (checkArray(solution, guess[i], 1) == true) {
+                    } else if (checkArray(solution, guess[i]) == true) {
                         board[roundNum][i] = guess[i];
                     } else {
                         board[roundNum][i] = guess[i];
@@ -328,11 +328,10 @@ public class Mastermind {
      * Interface: array, char value
      * Returns: boolean
      ************************************************************/
-    public static boolean checkArray(char[] arr, char toCheckValue, int index) {
+    public static boolean checkArray(char[] arr, char toCheckValue) {
         boolean test = false;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == toCheckValue) {
-                index = i;
                 test = true;
                 break;
             } // end if
@@ -348,9 +347,8 @@ public class Mastermind {
      ************************************************************/
     public static void checkRows(char[] a, char[] g, String[] s, int r) {
         s[r] = "";
-        String rightSpot = "";
-        String rightColor = "";
-        String dne = "";
+        String[] hint = { "Ø", "Ø", "Ø", "Ø" };
+        int index = 0;
 
         // make temporary guess and answer arrays
         char[] aTemp = new char[4];
@@ -365,27 +363,23 @@ public class Mastermind {
         // Check for exact
         for (int i = 0; i < aTemp.length; i++) {
             if (aTemp[i] == gTemp[i]) {
-                rightSpot += "O";
+                hint[index++] = "O";
                 aTemp[i] = '0';
                 gTemp[i] = '1';
             }
         }
-
-        int index = 0;
         // Check for correct
         for (int i = 0; i < aTemp.length; i++) {
-            if (checkArray(aTemp, gTemp[i], index)) {
-                rightColor += "?";
+            if (checkArray(aTemp, gTemp[i])) {
+                hint[index++] = "?";
                 gTemp[i] = '0';
             }
         }
 
-        // Make the rest incorrect
-        for (int i = 0; i < 4 - (rightSpot.length() + rightColor.length()); i++) {
-            dne += "Ø";
+        // add hint string to the hint array
+        for (String i : hint) {
+            s[r] += i;
         }
-
-        s[r] = rightSpot + rightColor + dne;
     }// end checkRows
 
     /***********************************************************
