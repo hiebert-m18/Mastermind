@@ -83,10 +83,7 @@ public class Mastermind {
         // Initialize Game
         Game game = new Game(row, col, numValues);
 
-        // ***** Main Processing *****
-
         // full game loop
-
         while (quit == false) {
             // reset variables
             game.reset();
@@ -100,8 +97,7 @@ public class Mastermind {
 
             game.loop();
 
-            // ***** Print Formatted Output *****
-
+            // Game Over
             System.out.println("***** Game Over *****");
 
             if (game.hasWon == true) {
